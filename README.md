@@ -13,6 +13,14 @@ Spring es el único *composition root*: `Main` inicia el contexto y las dependen
 
 En Windows se puede utilizar `mvnw.cmd`.
 
+## Interfaz web
+
+El panel de gestión está disponible en la raíz de la aplicación (`/`). Inicia sesión
+con una cuenta existente para consultar el directorio; las cuentas `ADMIN` pueden
+crear, editar y eliminar usuarios, mientras que las cuentas `REVIEWER` tienen
+acceso de solo lectura. La interfaz se sirve desde `src/main/resources/static` y
+consume la API REST de la misma aplicación.
+
 ## Despliegue en Render
 
 El archivo `render.yaml` define el servicio web, el build con Docker y el despliegue

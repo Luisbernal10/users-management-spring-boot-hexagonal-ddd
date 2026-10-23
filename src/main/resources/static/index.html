@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7fb">
+    <meta name="description" content="Panel de administración de usuarios">
+    <title>Usuarios | Nexo</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main id="login-view" class="login-view">
+      <section class="login-card" aria-labelledby="login-title">
+        <a class="brand brand-login" href="/" aria-label="Nexo, inicio">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          <span>Nexo<span class="brand-dot">.</span></span>
+        </a>
+        <p class="eyebrow">ESPACIO DE TRABAJO</p>
+        <h1 id="login-title">Qué bueno verte.</h1>
+        <p class="muted login-intro">Inicia sesión para administrar tus usuarios.</p>
+        <form id="login-form" class="form-stack">
+          <label class="field">
+            <span>Correo electrónico</span>
+            <input name="email" type="email" autocomplete="username" placeholder="nombre@empresa.com" required>
+          </label>
+          <label class="field">
+            <span>Contraseña</span>
+            <input name="password" type="password" autocomplete="current-password" placeholder="Tu contraseña" minlength="8" required>
+          </label>
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+          <button class="button button-primary button-wide" type="submit">
+            <span>Iniciar sesión</span><span aria-hidden="true">→</span>
+          </button>
+        </form>
+        <p class="login-footnote">Acceso seguro · Gestión de usuarios</p>
+      </section>
+      <aside class="login-aside" aria-hidden="true">
+        <div class="aside-orb orb-one"></div>
+        <div class="aside-orb orb-two"></div>
+        <div class="aside-content">
+          <span class="aside-kicker">GESTIÓN, SIN COMPLICACIONES</span>
+          <h2>Todo tu equipo.<br><span>En un solo lugar.</span></h2>
+          <p>Administra accesos, perfiles y estados con claridad y control.</p>
+          <div class="aside-decoration">
+            <span class="decoration-line"></span>
+            <span>Personas primero</span>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <div id="app-view" class="app-shell" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Nexo, inicio">
+          <span class="brand-mark" aria-hidden="true">N</span>
+          <span>Nexo<span class="brand-dot">.</span></span>
+        </a>
+        <div class="workspace-label">ESPACIO DE TRABAJO</div>
+        <nav class="side-nav" aria-label="Navegación principal">
+          <span class="nav-item nav-item-active">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-1.5a4.5 4.5 0 0 0-4.5-4.5h-4A4.5 4.5 0 0 0 3 18.5V20m6.5-9a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6-7.7a4 4 0 0 1 0 7.7m2 3h.5a4.5 4.5 0 0 1 4.5 4.5V20"/></svg>
+            <span>Usuarios</span>
+          </span>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="sidebar-note">
+            <span class="note-icon" aria-hidden="true">✦</span>
+            <strong>Todo en orden</strong>
+            <p>Tu espacio de trabajo está listo.</p>
+          </div>
+          <button id="logout-button" class="profile-button" type="button">
+            <span id="profile-avatar" class="avatar avatar-small">U</span>
+            <span class="profile-copy"><strong id="profile-role">Usuario</strong><small>Cerrar sesión</small></span>
+            <span class="profile-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="main-panel">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>Panel</span><span class="breadcrumb-slash">/</span><strong>Usuarios</strong></div>
+          <div class="topbar-right">
+            <span class="secure-label"><span class="secure-dot"></span> Sesión segura</span>
+            <span id="topbar-avatar" class="avatar avatar-top">U</span>
+          </div>
+        </header>
+        <main class="page-content">
+          <section class="page-heading">
+            <div>
+              <p class="eyebrow">DIRECTORIO</p>
+              <h1>Usuarios <span id="user-count" class="count-badge">0</span></h1>
+              <p class="muted">Administra las personas y sus accesos en tu espacio.</p>
+            </div>
+            <button id="create-user-button" class="button button-primary" type="button">
+              <span class="plus-icon" aria-hidden="true">+</span> Nuevo usuario
+            </button>
+          </section>
+
+          <section class="stats-grid" aria-label="Resumen de usuarios">
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-purple" aria-hidden="true">♧</div>
+              <div><span class="stat-label">Total de usuarios</span><strong id="stat-total">—</strong></div>
+              <span class="stat-caption">En el directorio</span>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-green" aria-hidden="true">✓</div>
+              <div><span class="stat-label">Activos</span><strong id="stat-active">—</strong></div>
+              <span class="stat-caption">Con acceso habilitado</span>
+            </article>
+            <article class="stat-card">
+              <div class="stat-icon stat-icon-amber" aria-hidden="true">◷</div>
+              <div><span class="stat-label">Pendientes</span><strong id="stat-pending">—</strong></div>
+              <span class="stat-caption">Por revisar</span>
+            </article>
+          </section>
+
+          <section class="directory-card" aria-labelledby="directory-title">
+            <div class="directory-heading">
+              <div>
+                <h2 id="directory-title">Directorio de usuarios</h2>
+                <p class="muted">Consulta y administra los perfiles registrados.</p>
+              </div>
+              <div class="directory-tools">
+                <label class="search-box">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
+                  <input id="search-input" type="search" placeholder="Buscar usuario..." aria-label="Buscar usuario">
+                  <kbd>/</kbd>
+                </label>
+                <label class="filter-select">
+                  <span class="sr-only">Filtrar por estado</span>
+                  <select id="status-filter">
+                    <option value="">Todos los estados</option>
+                    <option value="ACTIVE">Activo</option>
+                    <option value="INACTIVE">Inactivo</option>
+                    <option value="PENDING">Pendiente</option>
+                    <option value="BLOCKED">Bloqueado</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div id="load-error" class="inline-error" role="alert" hidden></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>USUARIO</th><th>ID</th><th>ROL</th><th>ESTADO</th><th class="actions-heading">ACCIONES</th></tr></thead>
+                <tbody id="users-table-body"></tbody>
+              </table>
+              <div id="empty-state" class="empty-state" hidden>
+                <div class="empty-icon" aria-hidden="true">⌕</div>
+                <strong id="empty-title">Aún no hay usuarios</strong>
+                <p id="empty-copy">Cuando agregues personas, aparecerán aquí.</p>
+                <button id="empty-create-button" class="button button-secondary" type="button">Crear primer usuario</button>
+              </div>
+              <div id="loading-state" class="loading-state"><span class="spinner"></span> Cargando usuarios...</div>
+            </div>
+            <footer class="table-footer"><span id="results-label">Mostrando 0 usuarios</span><span class="footer-mark">Nexo<span>.</span> · Directorio</span></footer>
+          </section>
+          <p class="page-footer">Hecho para equipos que crecen con claridad <span aria-hidden="true">✦</span></p>
+        </main>
+      </section>
+    </div>
+
+    <dialog id="user-dialog" class="user-dialog">
+      <form id="user-form" class="dialog-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">DIRECTORIO</p>
+            <h2 id="dialog-title">Nuevo usuario</h2>
+            <p id="dialog-description" class="muted">Completa los datos para agregar una persona.</p>
+          </div>
+          <button id="close-dialog-button" class="icon-button close-button" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div class="dialog-fields">
+          <label id="user-id-field" class="field">
+            <span>ID de usuario</span>
+            <input name="id" type="text" placeholder="Ej. usr-001" required>
+          </label>
+          <label class="field">
+            <span>Nombre completo</span>
+            <input name="name" type="text" placeholder="Nombre y apellido" minlength="3" required>
+          </label>
+          <label class="field">
+            <span>Correo electrónico</span>
+            <input name="email" type="email" placeholder="nombre@empresa.com" required>
+          </label>
+          <label id="password-field" class="field">
+            <span>Contraseña temporal</span>
+            <input name="password" type="password" placeholder="Mínimo 8 caracteres" minlength="8">
+            <small id="password-hint">Debe tener al menos 8 caracteres.</small>
+          </label>
+          <label class="field">
+            <span>Rol</span>
+            <select name="role" required>
+              <option value="MEMBER">Miembro</option>
+              <option value="REVIEWER">Revisor</option>
+              <option value="ADMIN">Administrador</option>
+            </select>
+          </label>
+          <label id="status-field" class="field" hidden>
+            <span>Estado</span>
+            <select name="status">
+              <option value="ACTIVE">Activo</option>
+              <option value="INACTIVE">Inactivo</option>
+              <option value="PENDING">Pendiente</option>
+              <option value="BLOCKED">Bloqueado</option>
+            </select>
+          </label>
+        </div>
+        <p id="dialog-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button id="cancel-dialog-button" class="button button-secondary" type="button">Cancelar</button>
+          <button id="save-user-button" class="button button-primary" type="submit">Crear usuario</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

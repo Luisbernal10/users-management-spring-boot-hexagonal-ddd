@@ -58,6 +58,14 @@ class UserRestControllerTest {
   @MockBean private JwtTokenService jwtTokenService;
 
   @Test
+  @DisplayName("GET / debe servir la interfaz web sin autenticacion")
+  void shouldServeFrontendWithoutAuthentication() throws Exception {
+    mockMvc
+        .perform(get("/"))
+        .andExpect(status().isOk());
+  }
+
+  @Test
   @WithMockUser(roles = "REVIEWER")
   @DisplayName("GET /api/users/{id} debe responder usando el caso de uso inyectado por Spring")
   void shouldGetUserByIdThroughSpringMvc() throws Exception {
